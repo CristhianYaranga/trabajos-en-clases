@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar ítem</title>
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-6">
+    <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+        <form method="post">
+            <label class="block mb-2">Nombre:</label>
+            <input name="name" value="{{ item.name }}" class="border p-2 w-full mb-4" required />
+            <button class="bg-blue-500 text-white px-4 py-2 rounded">Guardar</button>
+            <a href="/" class="ml-4 text-gray-600">Cancelar</a>
+        </form>
+    </div>
+</body>
+
+</html>

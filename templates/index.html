@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD con Flask</title>
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-6">
+    <div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
+        <h1 class="text-2xl font-bold mb-4">CRUD con Flask</h1>
+        
+        <!-- Formulario de búsqueda -->
+        <form method="get" class="mb-4 space-y-3">
+            <div class="flex gap-2">
+                <input name="q" placeholder="Buscar por nombre..." value="{{ request.args.get('q', '') }}" class="border p-2 flex-1 rounded" />
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Buscar</button>
+            </div>
+            <div class="flex gap-2 items-center">
+                <label class="text-sm text-gray-600">Desde:</label>
+                <input type="date" name="fecha_inicio" value="{{ request.args.get('fecha_inicio', '') }}" class="border p-2 rounded text-sm" />
+                <label class="text-sm text-gray-600">Hasta:</label>
+                <input type="date" name="fecha_fin" value="{{ request.args.get('fecha_fin', '') }}" class="border p-2 rounded text-sm" />
+                <a href="/" class="text-sm text-blue-600 hover:underline whitespace-nowrap">Limpiar filtros</a>
+            </div>
+        </form>
+        
+        <form action="/add" method="post" class="flex gap-2 mb-4">
+            <input name="name" placeholder="Nuevo ítem" class="border p-2 flex-1 rounded" required />
+            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Agregar</button>
+        </form>
+        
+        <p class="mb-2 text-gray-600">Total de items: {{ items|length }}</p>
+        
+        <ul>
+            {% for item in items %}
+            <li class="flex justify-between items-center border-b py-3">
+                <div>
+                    <div class="font-medium">{{ item.name }}</div>
+                    {% if item.created_at %}
+                    <div class="text-xs text-gray-500 mt-1">{{ item.created_at.strftime('%d/%m/%Y %H:%M') }}</div>
+                    {% endif %}
+                </div>
+                <div class="space-x-2">
+                    <a href="/edit/{{ item.id }}" class="text-blue-600 hover:underline">Editar</a>
+                    <a href="/delete/{{ item.id }}" class="text-red-600 hover:underline">Eliminar</a>
+                </div>
+            </li>
+            {% else %}
+            <li class="text-gray-500 py-2">No hay items. Agrega uno arriba.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>
